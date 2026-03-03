@@ -1,0 +1,128 @@
+.hdr {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  backdrop-filter: blur(10px);
+  background: rgba(246, 247, 251, 0.78);
+  border-bottom: 1px solid #e6e8f0;
+}
+
+.hdr__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand__logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  color: white;
+  background: linear-gradient(135deg, #111827, #4f46e5);
+  box-shadow: 0 10px 22px rgba(17, 24, 39, 0.18);
+}
+
+.brand__name {
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+.brand__tag {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 1px;
+}
+
+.hdr__right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cartBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 14px;
+  background: white;
+  border: 1px solid #e6e8f0;
+  box-shadow: 0 10px 22px rgba(2, 6, 23, 0.05);
+}
+
+.cartBadge__icon {
+  font-size: 16px;
+}
+
+.cartBadge__count {
+  min-width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 12px;
+  color: white;
+  background: #111827;
+}
+
+.userBox {
+  display: grid;
+  gap: 1px;
+  padding: 6px 10px;
+}
+
+.userBox__label {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.userBox__name {
+  font-weight: 700;
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn {
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: transform 0.05s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn--ghost {
+  background: white;
+  border-color: #e6e8f0;
+}
+.btn--ghost:hover {
+  background: #f1f5f9;
+}
+.cartBadge--bump {
+  animation: bump 220ms ease;
+}
+
+@keyframes bump {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}

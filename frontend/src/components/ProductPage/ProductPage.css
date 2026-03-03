@@ -1,0 +1,51 @@
+.pp {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.pp__back {
+  margin-bottom: 20px;
+  border: none;
+  background: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.pp__card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+}
+
+.pp__imageWrap img {
+  width: 100%;
+  border-radius: 20px;
+}
+
+.pp__desc {
+  color: #64748b;
+  margin: 20px 0;
+}
+
+.pp__price {
+  font-size: 24px;
+  font-weight: 900;
+}
+.pp__btn {
+  margin-top: 14px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  padding: 12px 12px;
+  cursor: pointer;
+  color: white;
+  background: linear-gradient(135deg, #111827, #4f46e5);
+  box-shadow: 0 10px 22px rgba(79, 70, 229, 0.18);
+}
+.pp__btn:active {
+  transform: translateY(1px);
+}
