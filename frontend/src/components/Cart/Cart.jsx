@@ -3,12 +3,19 @@ import "./Cart.css";
 
 export default function Cart({ cart, total, onAdd, onRemove, onClear }) {
   const [collapsed, setCollapsed] = useState(false);
+  const [clearing, setClearing] = useState(false);
 
   const count = useMemo(() => cart.reduce((s, x) => s + x.qty, 0), [cart]);
 
   function clear() {
-    if (!onClear) return;
-    onClear();
+    if (!onClear || cart.length === 0 || clearing) return;
+
+    setClearing(true);
+
+    setTimeout(() => {
+      onClear();
+      setClearing(false);
+    }, 250);
   }
 
   return (
@@ -41,16 +48,33 @@ export default function Cart({ cart, total, onAdd, onRemove, onClear }) {
             </div>
           ) : (
             cart.map((item) => (
-              <div key={item.product.id} className="ci">
+              <div
+                key={item.product.id}
+                className={`ci ${clearing ? "ci--removing" : ""}`}
+              >
                 <div className="ci__left">
                   <div className="ci__name">{item.product.name}</div>
                   <div className="ci__price">{item.product.price.toFixed(2)} € / шт</div>
                 </div>
 
                 <div className="ci__qty">
-                  <button className="ci__btn" onClick={() => onRemove(item.product.id)}>-</button>
+                  <button
+                    className="ci__btn"
+                    disabled={clearing}
+                    onClick={() => onRemove(item.product.id)}
+                    type="button"
+                  >
+                    -
+                  </button>
                   <span className="ci__num">{item.qty}</span>
-                  <button className="ci__btn" onClick={() => onAdd(item.product)}>+</button>
+                  <button
+                    className="ci__btn"
+                    disabled={clearing}
+                    onClick={() => onAdd(item.product)}
+                    type="button"
+                  >
+                    +
+                  </button>
                 </div>
               </div>
             ))
@@ -66,7 +90,7 @@ export default function Cart({ cart, total, onAdd, onRemove, onClear }) {
           <div className="cart__actions">
             <button
               className="cart__clear"
-              disabled={cart.length === 0}
+              disabled={cart.length === 0 || clearing}
               onClick={clear}
               type="button"
             >
@@ -75,7 +99,7 @@ export default function Cart({ cart, total, onAdd, onRemove, onClear }) {
 
             <button
               className="cart__checkout"
-              disabled={cart.length === 0}
+              disabled={cart.length === 0 || clearing}
               onClick={() => alert("Заказ оформлен! Ожидайте письмо на указанный email.")}
               type="button"
             >
