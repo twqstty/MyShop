@@ -1,10 +1,15 @@
 import { useMemo, useState } from "react";
 import "./Cart.css";
 
-export default function Cart({ cart, total, onAdd, onRemove }) {
+export default function Cart({ cart, total, onAdd, onRemove, onClear }) {
   const [collapsed, setCollapsed] = useState(false);
 
   const count = useMemo(() => cart.reduce((s, x) => s + x.qty, 0), [cart]);
+
+  function clear() {
+    if (!onClear) return;
+    onClear();
+  }
 
   return (
     <aside className={`cart ${collapsed ? "cart--collapsed" : ""}`}>
@@ -57,13 +62,26 @@ export default function Cart({ cart, total, onAdd, onRemove }) {
             <span>Итого</span>
             <b>{total.toFixed(2)} €</b>
           </div>
-          <button
-            className="cart__checkout"
-            disabled={cart.length === 0}
-            onClick={() => alert("Заказ оформлен (заглушка).")}
-          >
-            Оформить заказ
-          </button>
+
+          <div className="cart__actions">
+            <button
+              className="cart__clear"
+              disabled={cart.length === 0}
+              onClick={clear}
+              type="button"
+            >
+              Очистить
+            </button>
+
+            <button
+              className="cart__checkout"
+              disabled={cart.length === 0}
+              onClick={() => alert("Заказ оформлен (заглушка).")}
+              type="button"
+            >
+              Оформить заказ
+            </button>
+          </div>
         </div>
       </div>
     </aside>

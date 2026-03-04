@@ -63,6 +63,9 @@ export default function App() {
 
     setToast({ title: "Добавлено в корзину", text: product.name });
   }
+  function clearCart() {
+    setCart([]);
+  }
 
   function removeFromCart(productId) {
     setCart((prev) =>
@@ -93,6 +96,7 @@ export default function App() {
               cartCount={cartCount}
               onAdd={addToCart}
               onRemove={removeFromCart}
+              onClear={clearCart}
             />
           }
         />

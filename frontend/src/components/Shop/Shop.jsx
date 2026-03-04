@@ -6,7 +6,7 @@ import Cart from "../Cart/Cart";
 import { flyToCart } from "../flyToCart";
 import { api } from "../api";
 
-export default function Shop({ user, onLogout, cart, cartCount, onAdd, onRemove }) {
+export default function Shop({ user, onLogout, cart, cartCount, onAdd, onRemove, onClear }) {
   const [products, setProducts] = useState([]);
   const [busy, setBusy] = useState(true);
   const [err, setErr] = useState("");
@@ -54,7 +54,7 @@ export default function Shop({ user, onLogout, cart, cartCount, onAdd, onRemove 
             <div className="catalog__head">
               <div>
                 <h2 className="catalog__title">Каталог</h2>
-                <p className="catalog__sub">Товары загружаются с backend.</p>
+                <p className="catalog__sub">Подбери для себя самую лучшую игровую периферию</p>
               </div>
             </div>
 
@@ -68,7 +68,13 @@ export default function Shop({ user, onLogout, cart, cartCount, onAdd, onRemove 
             </div>
           </section>
 
-          <Cart cart={cart} total={total} onAdd={(p) => handleAdd(p)} onRemove={onRemove} />
+          <Cart
+            cart={cart}
+            total={total}
+            onAdd={(p) => handleAdd(p)}
+            onRemove={onRemove}
+            onClear={onClear}
+          />
         </div>
       </main>
     </>

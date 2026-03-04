@@ -8,7 +8,7 @@ export default function Header({ user, cartCount, onLogout }) {
           <div className="brand__logo">MS</div>
           <div className="brand__text">
             <div className="brand__name">MyShop</div>
-            <div className="brand__tag">интернет-магазин компьютерной техники</div>
+            <div className="brand__tag">Интернет-магазин компьютерной техники</div>
           </div>
         </div>
 

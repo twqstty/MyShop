@@ -191,3 +191,30 @@
 .cart--collapsed {
   height: auto;
 }
+.cart__actions {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 10px;
+}
+
+.cart__clear {
+  border: 1px solid #e6e8f0;
+  border-radius: 14px;
+  padding: 12px 12px;
+  cursor: pointer;
+  background: #fff;
+  color: #0f172a;
+}
+
+.cart__clear:hover {
+  background: rgba(15, 23, 42, 0.04);
+}
+
+.cart__clear:active {
+  transform: translateY(1px);
+}
+
+.cart__clear:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
