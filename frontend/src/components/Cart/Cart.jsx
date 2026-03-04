@@ -76,7 +76,7 @@ export default function Cart({ cart, total, onAdd, onRemove, onClear }) {
             <button
               className="cart__checkout"
               disabled={cart.length === 0}
-              onClick={() => alert("Заказ оформлен (заглушка).")}
+              onClick={() => alert("Заказ оформлен! Ожидайте письмо на указанный email.")}
               type="button"
             >
               Оформить заказ
