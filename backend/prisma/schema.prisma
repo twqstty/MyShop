@@ -33,3 +33,12 @@ model Post {
   // Описание связи: поле authorId ссылается на id в модели User
   author   User @relation(fields: [authorId], references: [id])
 }
+
+model Product {
+  id        Int      @id @default(autoincrement())
+  name      String
+  price     Float
+  image     String
+  desc      String
+  createdAt DateTime @default(now())
+}
