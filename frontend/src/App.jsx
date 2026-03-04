@@ -13,7 +13,6 @@ export default function App() {
   const [page, setPage] = useState(getToken() ? "shop" : "register");
   const [user, setUser] = useState(null);
 
-  // ✅ cart from localStorage
   const [cart, setCart] = useState(() => {
     try {
       const raw = localStorage.getItem("cart");
@@ -23,15 +22,12 @@ export default function App() {
     }
   });
 
-  // ✅ toast
   const [toast, setToast] = useState(null);
 
-  // ✅ save cart
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  // ✅ auto-hide toast
   useEffect(() => {
     if (!toast) return;
     const t = setTimeout(() => setToast(null), 1800);

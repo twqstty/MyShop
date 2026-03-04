@@ -4,7 +4,6 @@ export function flyToCart(fromEl, targetEl) {
   const from = fromEl.getBoundingClientRect();
   const to = targetEl.getBoundingClientRect();
 
-  // вместо копии картинки — маленький "чип"
   const chip = document.createElement("div");
   const size = 14;
 
@@ -42,7 +41,6 @@ export function flyToCart(fromEl, targetEl) {
     "transitionend",
     () => {
       chip.remove();
-      // bump на бейдже корзины
       targetEl.classList.add("cartBadge--bump");
       setTimeout(() => targetEl.classList.remove("cartBadge--bump"), 220);
     },
