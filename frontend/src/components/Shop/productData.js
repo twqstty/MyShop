@@ -167,4 +167,25 @@ export const PRODUCTS = [
     image: "/products/monitor6.jpg",
     desc: "38″ 2300R IPS 4K, монитор E-ports, монитор 4K, изогнутый",
   },
+  {
+    id: 25,
+    name: "Игровые наушники Elite Barbarians",
+    price: 69.69,
+    image: "/products/barbarr.png",
+    desc: "Игровые наушники для настоящих мужиков",
+  }, 
+  {
+    id: 26,
+    name: "Игровые наушники Elite Barbarians 2.0",
+    price: 69.69,
+    image: "/products/barr.png",
+    desc: "Игровые наушники для настоящих мужиков, новая версия с улучшенным звуком и микрофоном",
+  },
+  {
+    id: 27,
+    name: "Игровые наушники Elite Barbarians Evolution",
+    price: 69.69,
+    image: "/products/purplebarb.png",
+    desc: "Игровые наушники для настоящих мужиков, новая версия с улучшенным звуком и микрофоном Evolution Editionq",
+  }
 ];
