@@ -5,9 +5,9 @@ export default function Header({ user, cartCount, onLogout }) {
     <header className="hdr">
       <div className="hdr__inner">
         <div className="brand">
-          <div className="brand__logo">MS</div>
+          <div className="brand__logo">WW</div>
           <div className="brand__text">
-            <div className="brand__name">MyShop</div>
+            <div className="brand__name">WWShop</div>
             <div className="brand__tag">Интернет-магазин компьютерной техники</div>
           </div>
         </div>
