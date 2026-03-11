@@ -145,7 +145,7 @@
   padding: 12px 12px;
   cursor: pointer;
   color: white;
-  background: linear-gradient(135deg, #111827, #4f46e5);
+  background: black;
   box-shadow: 0 10px 22px rgba(79, 70, 229, 0.18);
 }
 .cart__checkout:disabled {

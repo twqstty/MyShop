@@ -6,12 +6,14 @@ import Register from "./components/Register/Register";
 import Shop from "./components/Shop/Shop";
 import ProductPage from "./components/ProductPage/ProductPage";
 import Toast from "./components/Toast/Toast";
+import CheckoutModal from "./components/CheckoutModal/CheckoutModal";
 
 import { getToken, clearToken } from "./components/api";
 
 export default function App() {
   const [page, setPage] = useState(getToken() ? "shop" : "register");
   const [user, setUser] = useState(null);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
   const [cart, setCart] = useState(() => {
     try {
@@ -62,7 +64,22 @@ export default function App() {
   function clearCart() {
     setCart([]);
   }
+  function openCheckout() {
+    setIsCheckoutOpen(true);
+  }
 
+  function closeCheckout() {
+    setIsCheckoutOpen(false);
+  }
+
+  function submitOrder(formData) {
+    console.log("ORDER DATA:", formData);
+    console.log("CART:", cart);
+
+    alert("Заказ успешно оформлен!");
+    setCart([]);
+    setIsCheckoutOpen(false);
+  }
   function removeFromCart(productId) {
     setCart((prev) =>
       prev
@@ -93,6 +110,7 @@ export default function App() {
               onAdd={addToCart}
               onRemove={removeFromCart}
               onClear={clearCart}
+              onCheckout={openCheckout}
             />
           }
         />
@@ -111,6 +129,13 @@ export default function App() {
       </Routes>
 
       <Toast toast={toast} onClose={() => setToast(null)} />
+      <CheckoutModal
+        cart={cart}
+        user={user}
+        isOpen={isCheckoutOpen}
+        onClose={closeCheckout}
+        onSubmitOrder={submitOrder}
+      />
     </>
   );
 }

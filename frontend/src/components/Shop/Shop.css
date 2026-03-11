@@ -20,20 +20,71 @@
   background: white;
   border: 1px solid #e6e8f0;
   border-radius: 18px;
-  padding: 14px 14px;
+  padding: 16px;
   box-shadow: 0 14px 30px rgba(2, 6, 23, 0.06);
+  display: grid;
+  gap: 14px;
+}
+
+.catalog__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .catalog__title {
   margin: 0;
-  font-size: 18px;
+  font-size: 22px;
   letter-spacing: 0.2px;
 }
 
 .catalog__sub {
   margin: 6px 0 0;
-  font-size: 12px;
+  font-size: 13px;
   color: #64748b;
+}
+
+.catalog__searchWrap {
+  position: relative;
+}
+
+.catalog__searchIcon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #64748b;
+  pointer-events: none;
+}
+
+.catalog__search {
+  width: 100%;
+  height: 46px;
+  border: 1px solid #dbe1ea;
+  border-radius: 14px;
+  padding: 0 14px 0 42px;
+  font-size: 14px;
+  outline: none;
+  background: #f8fafc;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.catalog__search:focus {
+  border-color: #4f46e5;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.08);
+}
+
+.catalog__status {
+  margin: 0;
+  padding: 12px 6px;
+  color: #475569;
+}
+
+.catalog__status--error {
+  color: crimson;
 }
 
 .catalog__grid {
@@ -46,12 +97,39 @@
   .shop__inner {
     grid-template-columns: 1fr;
   }
+
   .catalog__grid {
     grid-template-columns: 1fr;
   }
+
   .cart {
     position: relative;
     top: 0;
     height: auto;
   }
+}
+.catalog__clearSearch {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(15, 23, 42, 0.06);
+  color: #0f172a;
+  cursor: pointer;
+  font-size: 14px;
+  display: grid;
+  place-items: center;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.catalog__clearSearch:hover {
+  background: rgba(15, 23, 42, 0.12);
+}
+
+.catalog__clearSearch:active {
+  transform: translateY(-50%) scale(0.92);
 }

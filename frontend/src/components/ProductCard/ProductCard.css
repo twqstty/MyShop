@@ -54,9 +54,18 @@
   padding: 10px 12px;
   cursor: pointer;
   color: white;
-  background: linear-gradient(135deg, #111827, #4f46e5);
+  background: black;
   box-shadow: 0 10px 22px rgba(79, 70, 229, 0.18);
 }
 .pc__btn:active {
   transform: translateY(1px);
+}
+.pc {
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.pc:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 34px rgba(2, 6, 23, 0.1);
 }

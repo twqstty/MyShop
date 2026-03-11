@@ -6,14 +6,24 @@ export default function ProductCard({ product, onAdd }) {
   const navigate = useNavigate();
   const imgRef = useRef(null);
 
+  function openProduct() {
+    navigate(`/product/${product.id}`);
+  }
+
+  function handleAdd(e) {
+    e.stopPropagation();
+    onAdd(product, imgRef.current);
+  }
+
   return (
-    <div className="pc">
-      <div
-        className="pc__imgWrap"
-        onClick={() => navigate(`/product/${product.id}`)}
-        style={{ cursor: "pointer" }}
-      >
-        <img ref={imgRef} className="pc__img" src={product.image} alt={product.name} />
+    <div className="pc" onClick={openProduct} role="button" tabIndex={0}>
+      <div className="pc__imgWrap">
+        <img
+          ref={imgRef}
+          className="pc__img"
+          src={product.image}
+          alt={product.name}
+        />
       </div>
 
       <div className="pc__meta">
@@ -22,8 +32,8 @@ export default function ProductCard({ product, onAdd }) {
       </div>
 
       <div className="pc__bottom">
-        <div className="pc__price">{product.price.toFixed(2)} €</div>
-        <button className="pc__btn" onClick={() => onAdd(product, imgRef.current)}>
+        <div className="pc__price">{Number(product.price).toFixed(2)} €</div>
+        <button className="pc__btn" onClick={handleAdd}>
           Добавить
         </button>
       </div>

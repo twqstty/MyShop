@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import "./Cart.css";
 
-export default function Cart({ cart, total, onAdd, onRemove, onClear }) {
+export default function Cart({ cart, total, onAdd, onRemove, onClear, onCheckout }) {
   const [collapsed, setCollapsed] = useState(false);
   const [clearing, setClearing] = useState(false);
 
@@ -96,11 +96,10 @@ export default function Cart({ cart, total, onAdd, onRemove, onClear }) {
             >
               Очистить
             </button>
-
             <button
               className="cart__checkout"
               disabled={cart.length === 0 || clearing}
-              onClick={() => alert("Заказ оформлен! Ожидайте письмо на указанный email.")}
+              onClick={onCheckout}
               type="button"
             >
               Оформить заказ
