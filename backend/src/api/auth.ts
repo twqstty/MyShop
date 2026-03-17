@@ -41,7 +41,13 @@ router.post(
 
       const user = await prisma.user.create({
         data: { username, email, password: hashedPass },
-        select: { id: true, username: true, email: true, createAt: true },
+        select: {
+          id: true,
+          username: true,
+          email: true,
+          role: true,
+          createAt: true,
+        },
       });
 
       const token = signToken(user);
@@ -65,7 +71,14 @@ router.post("/login", async (req: Request<{}, {}, LoginBody>, res: Response) => 
 
     const user = await prisma.user.findFirst({
       where: email ? { email } : { username: username! },
-      select: { id: true, username: true, email: true, password: true, createAt: true },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        role: true,
+        password: true,
+        createAt: true,
+      },
     });
 
     if (!user) return res.status(401).json({ error: "Invalid credentials" });
@@ -73,7 +86,14 @@ router.post("/login", async (req: Request<{}, {}, LoginBody>, res: Response) => 
     const ok = await comparePass(password, user.password);
     if (!ok) return res.status(401).json({ error: "Invalid credentials" });
 
-    const safeUser = { id: user.id, username: user.username, email: user.email, createAt: user.createAt };
+    const safeUser = {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      createAt: user.createAt,
+    };
+
     const token = signToken(safeUser);
 
     return res.status(200).json({ user: safeUser, token });

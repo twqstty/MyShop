@@ -14,31 +14,67 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
 model User {
   id       Int      @id @default(autoincrement())
   username String   @unique
   email    String   @unique
   password String
+  role     Role     @default(USER)
   createAt DateTime @default(now())
   posts    Post[]
+  orders   Order[]
 }
 
 model Post {
-  id      Int     @id @default(autoincrement())
-  title   String
-  content String?
-
-  // Поле для хранения ID автора
+  id       Int     @id @default(autoincrement())
+  title    String
+  content  String?
   authorId Int
-  // Описание связи: поле authorId ссылается на id в модели User
-  author   User @relation(fields: [authorId], references: [id])
+  author   User    @relation(fields: [authorId], references: [id])
 }
 
 model Product {
-  id        Int      @id @default(autoincrement())
-  name      String
-  price     Float
-  image     String
-  desc      String
+  id         Int         @id @default(autoincrement())
+  name       String
+  price      Float
+  image      String
+  desc       String
+  createdAt  DateTime    @default(now())
+  orderItems OrderItem[]
+}
+
+model Order {
+  id     Int  @id @default(autoincrement())
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  fullName String
+  email    String
+  phone    String
+  address  String
+  comment  String?
+
+  total Float
+
+  items OrderItem[]
+
   createdAt DateTime @default(now())
+}
+
+model OrderItem {
+  id Int @id @default(autoincrement())
+
+  orderId Int
+  order   Order @relation(fields: [orderId], references: [id])
+
+  productId Int
+  product   Product @relation(fields: [productId], references: [id])
+
+  price Float
+  qty   Int
 }
