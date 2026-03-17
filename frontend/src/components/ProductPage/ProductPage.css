@@ -49,3 +49,44 @@
 .pp__btn:active {
   transform: translateY(1px);
 }
+
+
+
+[data-theme="dark"] .pp {
+  color: #e5e7eb;
+}
+
+[data-theme="dark"] .pp__back {
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .pp__back:hover {
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .pp__card {
+  background: #111827;
+  border: 1px solid #334155;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+}
+
+[data-theme="dark"] .pp__desc {
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .pp__price {
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .pp__btn {
+  background: #6366f1;
+  box-shadow: 0 10px 25px rgba(99,102,241,0.35);
+}
+
+[data-theme="dark"] .pp__btn:hover {
+  background: #4f46e5;
+}
+
+[data-theme="dark"] .pp__imageWrap img {
+  background: #020617;
+}

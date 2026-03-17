@@ -6,7 +6,7 @@ import Cart from "../Cart/Cart";
 import { flyToCart } from "../flyToCart";
 import { api } from "../api";
 
-export default function Shop({ user, onLogout, cart, cartCount, onAdd, onRemove, onClear, onCheckout }) {
+export default function Shop({ user, onLogout, cart, cartCount, onAdd, onRemove, onClear, onCheckout, theme, onToggleTheme }) {
   const [products, setProducts] = useState([]);
   const [busy, setBusy] = useState(true);
   const [err, setErr] = useState("");
@@ -59,7 +59,12 @@ export default function Shop({ user, onLogout, cart, cartCount, onAdd, onRemove,
 
   return (
     <>
-      <Header user={user} cartCount={cartCount} onLogout={onLogout} />
+      <Header user={user}
+      cartCount={cartCount}
+      onLogout={onLogout}
+      theme={theme}
+      onToggleTheme={onToggleTheme}
+      />
 
       <main className="shop">
         <div className="shop__inner">

@@ -69,3 +69,24 @@
   transform: translateY(-3px);
   box-shadow: 0 18px 34px rgba(2, 6, 23, 0.1);
 }
+[data-theme="dark"] .pc {
+  background: #111827;
+  border-color: #334155;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+}
+
+[data-theme="dark"] .pc__imgWrap {
+  background: #0f172a;
+}
+
+[data-theme="dark"] .pc__name {
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .pc__desc {
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .pc__price {
+  color: #e5e7eb;
+}

@@ -1,6 +1,7 @@
+import { Link } from "react-router-dom";
 import "./Header.css";
 
-export default function Header({ user, cartCount, onLogout }) {
+export default function Header({ user, cartCount, onLogout, theme, onToggleTheme }) {
   return (
     <header className="hdr">
       <div className="hdr__inner">
@@ -13,6 +14,15 @@ export default function Header({ user, cartCount, onLogout }) {
         </div>
 
         <div className="hdr__right">
+          <button
+            className="themeToggle"
+            onClick={onToggleTheme}
+            type="button"
+            title={theme === "light" ? "Включить тёмную тему" : "Включить светлую тему"}
+          >
+            {theme === "light" ? "🌙" : "☀️"}
+          </button>
+
           <div id="cartBadge" className="cartBadge" title="Товары в корзине">
             <span className="cartBadge__icon">🛒</span>
             <span className="cartBadge__count">{cartCount}</span>
@@ -22,6 +32,12 @@ export default function Header({ user, cartCount, onLogout }) {
             <div className="userBox__label">Вы вошли как</div>
             <div className="userBox__name">{user?.username || user?.email}</div>
           </div>
+
+          {user?.role === "ADMIN" && (
+            <Link className="btn btn--ghost" to="/admin">
+              Админ
+            </Link>
+          )}
 
           <button className="btn btn--ghost" onClick={onLogout}>
             Выйти

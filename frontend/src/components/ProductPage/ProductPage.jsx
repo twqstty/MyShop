@@ -5,7 +5,7 @@ import Header from "../Header/Header";
 import { flyToCart } from "../flyToCart";
 import { api } from "../api";
 
-export default function ProductPage({ user, onLogout, cartCount, onAdd }) {
+export default function ProductPage({ user, onLogout, cartCount, onAdd, theme, onToggleTheme }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const imgRef = useRef(null);
@@ -49,7 +49,12 @@ export default function ProductPage({ user, onLogout, cartCount, onAdd }) {
 
   return (
     <>
-      <Header user={user} cartCount={cartCount} onLogout={onLogout} />
+      <Header user={user}
+      cartCount={cartCount}
+      onLogout={onLogout}
+      theme={theme}
+      onToggleTheme={onToggleTheme}
+      />
 
       <div className="pp">
         <button className="pp__back" onClick={() => navigate(-1)}>

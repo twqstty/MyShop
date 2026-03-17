@@ -52,6 +52,27 @@
   gap: 12px;
 }
 
+.themeToggle {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  border: 1px solid #e6e8f0;
+  background: white;
+  cursor: pointer;
+  font-size: 18px;
+  display: grid;
+  place-items: center;
+  transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.themeToggle:hover {
+  background: #f1f5f9;
+}
+
+.themeToggle:active {
+  transform: scale(0.96);
+}
+
 .cartBadge {
   display: inline-flex;
   align-items: center;
@@ -114,9 +135,11 @@
   background: white;
   border-color: #e6e8f0;
 }
+
 .btn--ghost:hover {
   background: #f1f5f9;
 }
+
 .cartBadge--bump {
   animation: bump 220ms ease;
 }
@@ -125,4 +148,32 @@
   0% { transform: scale(1); }
   50% { transform: scale(1.08); }
   100% { transform: scale(1); }
+}
+
+
+[data-theme="dark"] .hdr {
+  background: rgba(15, 23, 42, 0.82);
+  border-bottom: 1px solid #273449;
+}
+
+[data-theme="dark"] .brand__tag,
+[data-theme="dark"] .userBox__label {
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .themeToggle,
+[data-theme="dark"] .cartBadge,
+[data-theme="dark"] .btn--ghost {
+  background: #111827;
+  border-color: #334155;
+  color: #e5e7eb;
+}
+
+[data-theme="dark"] .themeToggle:hover,
+[data-theme="dark"] .btn--ghost:hover {
+  background: #1e293b;
+}
+
+[data-theme="dark"] .cartBadge__count {
+  background: #4f46e5;
 }

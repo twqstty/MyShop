@@ -194,3 +194,62 @@
     grid-template-columns: 1fr;
   }
 }
+[data-theme="dark"] .checkoutOverlay {
+  background: rgba(2, 6, 23, 0.72);
+}
+
+[data-theme="dark"] .checkoutModal {
+  background: #111827;
+  border-color: #334155;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .checkoutModal__head {
+  border-bottom-color: #273449;
+}
+
+[data-theme="dark"] .checkoutModal__title,
+[data-theme="dark"] .checkoutSummary__title,
+[data-theme="dark"] .checkoutItem__name,
+[data-theme="dark"] .checkoutSummary__total,
+[data-theme="dark"] .checkoutField label {
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .checkoutModal__sub,
+[data-theme="dark"] .checkoutItem__meta {
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .checkoutModal__close,
+[data-theme="dark"] .checkoutBtn--ghost {
+  background: #1e293b;
+  color: #f8fafc;
+  border: 1px solid #334155;
+}
+
+[data-theme="dark"] .checkoutField input,
+[data-theme="dark"] .checkoutField textarea {
+  background: #0f172a;
+  border-color: #334155;
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .checkoutField input::placeholder,
+[data-theme="dark"] .checkoutField textarea::placeholder {
+  color: #64748b;
+}
+
+[data-theme="dark"] .checkoutSummary {
+  background: #0f172a;
+  border-color: #334155;
+}
+
+[data-theme="dark"] .checkoutItem {
+  background: #111827;
+  border-color: #273449;
+}
+
+[data-theme="dark"] .checkoutSummary__total {
+  border-top-color: #273449;
+}

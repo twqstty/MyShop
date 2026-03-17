@@ -133,3 +133,47 @@
 .catalog__clearSearch:active {
   transform: translateY(-50%) scale(0.92);
 }
+
+
+
+[data-theme="dark"] .shop {
+  background: #0b1220;
+}
+
+[data-theme="dark"] .catalog__head {
+  background: #111827;
+  border-color: #334155;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+}
+
+[data-theme="dark"] .catalog__title {
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .catalog__sub,
+[data-theme="dark"] .catalog__status {
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .catalog__search {
+  background: #0f172a;
+  border-color: #334155;
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .catalog__search::placeholder {
+  color: #64748b;
+}
+
+[data-theme="dark"] .catalog__searchIcon {
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .catalog__clearSearch {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .catalog__clearSearch:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
