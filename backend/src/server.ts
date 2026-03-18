@@ -6,6 +6,7 @@ import productsRouter from "./routes/products";
 import authRouter from "./api/auth";
 import postsRouter from "./api/posts";
 import ordersRouter from "./routes/orders";
+import profileRouter from "./routes/profile";
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/posts", postsRouter);
 app.use("/api/orders", ordersRouter);
+app.use("/api/profile", profileRouter);
 
 app.get("/", (_req, res) => {
   res.status(200).json({ status: "ok" });
