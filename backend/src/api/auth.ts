@@ -1,7 +1,11 @@
 import express, { Request, Response } from "express";
-import prisma from "../db";
-import { comparePass, hashPass } from "../utils/hashPass";
 import { signToken } from "../middleware/auth";
+import {
+  findUserForLogin,
+  findUserForRegister,
+  registerUser,
+  verifyPassword,
+} from "../services/authService";
 
 interface RegisterBody {
   username?: string;
@@ -31,24 +35,10 @@ router.post(
         return res.status(400).json({ error: "username, email and password are required" });
       }
 
-      const exists = await prisma.user.findFirst({
-        where: { OR: [{ email }, { username }] },
-        select: { id: true },
-      });
+      const exists = await findUserForRegister(email, username);
       if (exists) return res.status(409).json({ error: "User already exists" });
 
-      const hashedPass = await hashPass(password);
-
-      const user = await prisma.user.create({
-        data: { username, email, password: hashedPass },
-        select: {
-          id: true,
-          username: true,
-          email: true,
-          role: true,
-          createAt: true,
-        },
-      });
+      const user = await registerUser({ username, email, password });
 
       const token = signToken(user);
       return res.status(201).json({ user, token });
@@ -69,21 +59,11 @@ router.post("/login", async (req: Request<{}, {}, LoginBody>, res: Response) => 
       return res.status(400).json({ error: "email/username and password are required" });
     }
 
-    const user = await prisma.user.findFirst({
-      where: email ? { email } : { username: username! },
-      select: {
-        id: true,
-        username: true,
-        email: true,
-        role: true,
-        password: true,
-        createAt: true,
-      },
-    });
+    const user = await findUserForLogin({ email, username, password });
 
     if (!user) return res.status(401).json({ error: "Invalid credentials" });
 
-    const ok = await comparePass(password, user.password);
+    const ok = await verifyPassword(password, user.password);
     if (!ok) return res.status(401).json({ error: "Invalid credentials" });
 
     const safeUser = {

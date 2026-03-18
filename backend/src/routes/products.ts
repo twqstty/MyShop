@@ -1,25 +1,29 @@
 import { Router } from "express";
-import { PrismaClient } from "../generated/prisma";
 import { authRequired } from "../middleware/auth";
-import { requireAdmin } from "../middleware/requireAdmin";
+import {
+  createProduct,
+  deleteProduct,
+  getProductById,
+  getProducts,
+  updateProduct,
+} from "../services/productService";
 
-const prisma = new PrismaClient();
 const router = Router();
 
-router.get("/", async (_req, res) => {
-  const products = await prisma.product.findMany({ orderBy: { id: "asc" } });
+router.get("/", authRequired, async (_req, res) => {
+  const products = await getProducts();
   res.json({ products });
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", authRequired, async (req, res) => {
   const id = Number(req.params.id);
-  const product = await prisma.product.findUnique({ where: { id } });
+  const product = await getProductById(id);
 
   if (!product) return res.status(404).json({ error: "Product not found" });
   res.json({ product });
 });
 
-router.post("/", authRequired, requireAdmin, async (req, res) => {
+router.post("/", authRequired, async (req, res) => {
   try {
     const { name, price, image, desc } = req.body;
 
@@ -27,13 +31,11 @@ router.post("/", authRequired, requireAdmin, async (req, res) => {
       return res.status(400).json({ error: "name, price, image, desc are required" });
     }
 
-    const product = await prisma.product.create({
-      data: {
-        name,
-        price: Number(price),
-        image,
-        desc,
-      },
+    const product = await createProduct({
+      name,
+      price: Number(price),
+      image,
+      desc,
     });
 
     return res.status(201).json({ product });
@@ -45,19 +47,16 @@ router.post("/", authRequired, requireAdmin, async (req, res) => {
   });
 }
 });
-router.put("/:id", authRequired, requireAdmin, async (req, res) => {
+router.put("/:id", authRequired, async (req, res) => {
   try {
     const id = Number(req.params.id);
     const { name, price, image, desc } = req.body;
 
-    const product = await prisma.product.update({
-      where: { id },
-      data: {
-        name,
-        price: Number(price),
-        image,
-        desc,
-      },
+    const product = await updateProduct(id, {
+      name,
+      price: Number(price),
+      image,
+      desc,
     });
 
     return res.json({ product });
@@ -69,13 +68,11 @@ router.put("/:id", authRequired, requireAdmin, async (req, res) => {
     });
   }
 });
-router.delete("/:id", authRequired, requireAdmin, async (req, res) => {
+router.delete("/:id", authRequired, async (req, res) => {
   try {
     const id = Number(req.params.id);
 
-    await prisma.product.delete({
-      where: { id },
-    });
+    await deleteProduct(id);
 
     return res.json({ ok: true });
   } catch (e: any) {
@@ -88,4 +85,3 @@ router.delete("/:id", authRequired, requireAdmin, async (req, res) => {
 });
 
 export default router;
-

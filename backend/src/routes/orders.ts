@@ -1,6 +1,6 @@
 import { Router, Response } from "express";
-import prisma from "../db";
 import { AuthRequest, authRequired } from "../middleware/auth";
+import { createOrder } from "../services/orderService";
 
 const router = Router();
 
@@ -14,31 +14,14 @@ router.post("/", authRequired, async (req: AuthRequest, res: Response) => {
       return res.status(400).json({ error: "Cart is empty" });
     }
 
-    const total = cart.reduce(
-      (sum: number, item: any) => sum + item.product.price * item.qty,
-      0
-    );
-
-    const order = await prisma.order.create({
-      data: {
-        userId,
-        fullName,
-        email,
-        phone,
-        address,
-        comment,
-        total,
-        items: {
-          create: cart.map((item: any) => ({
-            productId: item.product.id,
-            price: item.product.price,
-            qty: item.qty,
-          })),
-        },
-      },
-      include: {
-        items: true,
-      },
+    const order = await createOrder({
+      userId,
+      fullName,
+      email,
+      phone,
+      address,
+      comment,
+      cart,
     });
 
     return res.json({ order });

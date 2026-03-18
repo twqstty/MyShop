@@ -10,8 +10,9 @@ import CheckoutModal from "./components/CheckoutModal/CheckoutModal";
 import AdminPanel from "./components/AdminPanel/AdminPanel";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 import FavoritesPage from "./components/FavoritesPage/FavoritesPage";
+import PostsPage from "./components/PostsPage/PostsPage";
 
-import { getToken, clearToken } from "./components/api";
+import { getToken, clearToken, clearUserData } from "./components/api";
 import { jwtDecode } from "jwt-decode";
 import { api } from "./components/api";
 
@@ -94,9 +95,11 @@ export default function App() {
   }
 
   function onLogout() {
+    api.logout().catch(() => {});
     setUser(null);
     setPage("login");
     clearToken();
+    clearUserData();
   }
 
   function toggleTheme() {
@@ -245,9 +248,23 @@ export default function App() {
         />
 
         <Route
+          path="/posts"
+          element={
+            <PostsPage
+              user={user}
+              onLogout={onLogout}
+              cartCount={cartCount}
+              theme={theme}
+              onToggleTheme={toggleTheme}
+              favoritesCount={favorites.length}
+            />
+          }
+        />
+
+        <Route
           path="/admin"
           element={
-            user?.role === "ADMIN" ? (
+            user ? (
               <AdminPanel />
             ) : (
               <Navigate to="/" replace />

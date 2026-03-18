@@ -116,9 +116,9 @@ export default function Header({ user, cartCount, onLogout, theme, onToggleTheme
             </div>
 
             <div className="hdrDropdown__section hdrDropdown__section--actions">
-              {user?.role === "ADMIN" && (
+              {user && (
                 <Link className="btn btn--ghost btn--menu" to="/admin" onClick={() => setMenuOpen(false)}>
-                  Админ
+                  Товары
                 </Link>
               )}
 
@@ -128,6 +128,10 @@ export default function Header({ user, cartCount, onLogout, theme, onToggleTheme
 
               <Link className="btn btn--menu" to="/favorites" onClick={() => setMenuOpen(false)}>
                 Избранное
+              </Link>
+
+              <Link className="btn btn--menu" to="/posts" onClick={() => setMenuOpen(false)}>
+                Посты
               </Link>
 
               <button className="btn btn--ghost btn--menu" onClick={handleLogout}>
