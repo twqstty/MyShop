@@ -26,15 +26,29 @@
 html,
 body,
 #root {
-  min-height: 100%;
+  width: 100%;
+  min-height: 100vh;
+}
+
+html {
+  height: 100%;
+  background: var(--bg);
 }
 
 body {
   margin: 0;
+  height: 100%;
   min-height: 100vh;
   background: var(--bg);
   color: var(--text);
+  overscroll-behavior-y: none;
   transition: background 0.25s ease, color 0.25s ease;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
 }
 
 a {

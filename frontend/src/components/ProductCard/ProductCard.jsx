@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./ProductCard.css";
 
-export default function ProductCard({ product, onAdd }) {
+export default function ProductCard({ product, onAdd, isFavorite = false, onToggleFavorite }) {
   const navigate = useNavigate();
   const imgRef = useRef(null);
 
@@ -15,9 +15,22 @@ export default function ProductCard({ product, onAdd }) {
     onAdd(product, imgRef.current);
   }
 
+  function handleFavorite(e) {
+    e.stopPropagation();
+    onToggleFavorite?.(product);
+  }
+
   return (
     <div className="pc" onClick={openProduct} role="button" tabIndex={0}>
       <div className="pc__imgWrap">
+        <button
+          className={`pc__fav ${isFavorite ? "pc__fav--active" : ""}`}
+          type="button"
+          onClick={handleFavorite}
+          aria-label={isFavorite ? "Убрать из избранного" : "Добавить в избранное"}
+        >
+          {isFavorite ? "♥" : "♡"}
+        </button>
         <img
           ref={imgRef}
           className="pc__img"

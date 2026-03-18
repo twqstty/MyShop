@@ -36,6 +36,13 @@
   font-size: 24px;
   font-weight: 900;
 }
+
+.pp__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 .pp__btn {
   margin-top: 14px;
   border: 1px solid transparent;
@@ -45,6 +52,22 @@
   color: white;
   background: black;
   box-shadow: 0 10px 22px rgba(79, 70, 229, 0.18);
+}
+
+.pp__fav {
+  margin-top: 14px;
+  border: 1px solid #dbe1ea;
+  border-radius: 14px;
+  padding: 12px 14px;
+  cursor: pointer;
+  background: white;
+  color: #0f172a;
+}
+
+.pp__fav--active {
+  color: #dc2626;
+  border-color: #fecaca;
+  background: #fff1f2;
 }
 .pp__btn:active {
   transform: translateY(1px);
@@ -85,6 +108,18 @@
 
 [data-theme="dark"] .pp__btn:hover {
   background: #4f46e5;
+}
+
+[data-theme="dark"] .pp__fav {
+  background: #0f172a;
+  border-color: #334155;
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .pp__fav--active {
+  color: #fb7185;
+  border-color: #7f1d1d;
+  background: #3f1720;
 }
 
 [data-theme="dark"] .pp__imageWrap img {

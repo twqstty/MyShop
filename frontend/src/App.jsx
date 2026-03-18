@@ -8,6 +8,8 @@ import ProductPage from "./components/ProductPage/ProductPage";
 import Toast from "./components/Toast/Toast";
 import CheckoutModal from "./components/CheckoutModal/CheckoutModal";
 import AdminPanel from "./components/AdminPanel/AdminPanel";
+import ProfilePage from "./components/ProfilePage/ProfilePage";
+import FavoritesPage from "./components/FavoritesPage/FavoritesPage";
 
 import { getToken, clearToken } from "./components/api";
 import { jwtDecode } from "jwt-decode";
@@ -58,10 +60,22 @@ export default function App() {
   });
 
   const [toast, setToast] = useState(null);
+  const [favorites, setFavorites] = useState(() => {
+    try {
+      const raw = localStorage.getItem("favorites");
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
+    }
+  });
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
+
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
 
   useEffect(() => {
     if (!toast) return;
@@ -117,6 +131,25 @@ export default function App() {
     setCart([]);
   }
 
+  function toggleFavorite(product) {
+    const exists = favorites.some((item) => item.id === product.id);
+
+    setFavorites((prev) =>
+      exists
+        ? prev.filter((item) => item.id !== product.id)
+        : [...prev, product]
+    );
+
+    setToast({
+      title: exists ? "Удалено из избранного" : "Добавлено в избранное",
+      text: product.name,
+    });
+  }
+
+  function isFavorite(productId) {
+    return favorites.some((item) => item.id === productId);
+  }
+
   function openCheckout() {
     setIsCheckoutOpen(true);
   }
@@ -125,22 +158,25 @@ export default function App() {
     setIsCheckoutOpen(false);
   }
 
-async function submitOrder(formData) {
-  try {
-    await api.createOrder({
-      ...formData,
-      cart,
-    });
-
-    alert("Заказ успешно оформлен!");
-
-    setCart([]);
-    setIsCheckoutOpen(false);
-
-  } catch (e) {
-    alert("Ошибка оформления заказа");
+  function handleUserUpdate(updatedUser) {
+    setUser(updatedUser);
   }
-}
+  async function submitOrder(formData) {
+    try {
+      await api.createOrder({
+        ...formData,
+        cart,
+      });
+
+      alert("Заказ успешно оформлен!");
+
+      setCart([]);
+      setIsCheckoutOpen(false);
+
+    } catch (e) {
+      alert("Ошибка оформления заказа");
+    }
+  }
 
   if (page === "register") {
     return <Register onAuthed={onAuthed} goLogin={() => setPage("login")} />;
@@ -167,6 +203,9 @@ async function submitOrder(formData) {
               onCheckout={openCheckout}
               theme={theme}
               onToggleTheme={toggleTheme}
+              favoritesCount={favorites.length}
+              isFavorite={isFavorite}
+              onToggleFavorite={toggleFavorite}
             />
           }
         />
@@ -181,6 +220,26 @@ async function submitOrder(formData) {
               onAdd={addToCart}
               theme={theme}
               onToggleTheme={toggleTheme}
+              favoritesCount={favorites.length}
+              isFavorite={isFavorite}
+              onToggleFavorite={toggleFavorite}
+            />
+          }
+        />
+
+        <Route
+          path="/favorites"
+          element={
+            <FavoritesPage
+              user={user}
+              onLogout={onLogout}
+              cartCount={cartCount}
+              theme={theme}
+              onToggleTheme={toggleTheme}
+              favorites={favorites}
+              onAdd={addToCart}
+              onToggleFavorite={toggleFavorite}
+              favoritesCount={favorites.length}
             />
           }
         />
@@ -196,6 +255,15 @@ async function submitOrder(formData) {
           }
         />
 
+        <Route
+          path="/profile"
+          element={
+            <ProfilePage
+              user={user}
+              onUserUpdate={handleUserUpdate}
+            />
+          }
+        />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 

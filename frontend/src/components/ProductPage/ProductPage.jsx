@@ -5,7 +5,17 @@ import Header from "../Header/Header";
 import { flyToCart } from "../flyToCart";
 import { api } from "../api";
 
-export default function ProductPage({ user, onLogout, cartCount, onAdd, theme, onToggleTheme }) {
+export default function ProductPage({
+  user,
+  onLogout,
+  cartCount,
+  onAdd,
+  theme,
+  onToggleTheme,
+  favoritesCount,
+  isFavorite,
+  onToggleFavorite,
+}) {
   const { id } = useParams();
   const navigate = useNavigate();
   const imgRef = useRef(null);
@@ -17,21 +27,26 @@ export default function ProductPage({ user, onLogout, cartCount, onAdd, theme, o
   useEffect(() => {
     let alive = true;
 
-    (async () => {
+    const loadProduct = async () => {
       try {
         setErr("");
         setBusy(true);
         const res = await api.getProduct(id);
-        if (!alive) return;
-        setProduct(res.product);
+        if (alive) {
+          setProduct(res.product);
+        }
       } catch (e) {
-        if (!alive) return;
-        setErr(e.message);
+        if (alive) {
+          setErr(e.message);
+        }
       } finally {
-        if (!alive) return;
-        setBusy(false);
+        if (alive) {
+          setBusy(false);
+        }
       }
-    })();
+    };
+
+    loadProduct();
 
     return () => {
       alive = false;
@@ -54,6 +69,7 @@ export default function ProductPage({ user, onLogout, cartCount, onAdd, theme, o
       onLogout={onLogout}
       theme={theme}
       onToggleTheme={onToggleTheme}
+      favoritesCount={favoritesCount}
       />
 
       <div className="pp">
@@ -74,10 +90,18 @@ export default function ProductPage({ user, onLogout, cartCount, onAdd, theme, o
               <h1>{product.name}</h1>
               <p className="pp__desc">{product.desc}</p>
               <div className="pp__price">{Number(product.price).toFixed(2)} €</div>
-
-              <button className="pp__btn" onClick={addHere}>
-                Добавить в корзину
-              </button>
+              <div className="pp__actions">
+                <button className="pp__btn" onClick={addHere}>
+                  Добавить в корзину
+                </button>
+                <button
+                  className={`pp__fav ${isFavorite?.(product.id) ? "pp__fav--active" : ""}`}
+                  type="button"
+                  onClick={() => onToggleFavorite?.(product)}
+                >
+                  {isFavorite?.(product.id) ? "В избранном" : "В избранное"}
+                </button>
+              </div>
             </div>
           </div>
         )}

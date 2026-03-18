@@ -12,6 +12,23 @@ export function clearToken() {
   localStorage.removeItem("token");
 }
 
+export function setUserData(user) {
+  localStorage.setItem("user", JSON.stringify(user));
+}
+
+export function getUserData() {
+  try {
+    const raw = localStorage.getItem("user");
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+export function clearUserData() {
+  localStorage.removeItem("user");
+}
+
 async function request(path, { method = "GET", body, auth = false } = {}) {
   const headers = { "Content-Type": "application/json" };
   if (auth) {
@@ -39,4 +56,6 @@ export const api = {
   updateProduct: (id, payload) => request(`/products/${id}`, { method: "PUT", body: payload, auth: true }),
   deleteProduct: (id) => request(`/products/${id}`, { method: "DELETE", auth: true }),
   createOrder: (payload) => request("/orders", { method: "POST", body: payload, auth: true }),
+  getProfile: () => request("/profile/me", { auth: true }),
+  updateProfile: (payload) => request("/profile/me", { method: "PUT", body: payload, auth: true }),
 };
