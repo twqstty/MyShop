@@ -10,11 +10,21 @@ import CheckoutModal from "./components/CheckoutModal/CheckoutModal";
 import AdminPanel from "./components/AdminPanel/AdminPanel";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 import FavoritesPage from "./components/FavoritesPage/FavoritesPage";
-import PostsPage from "./components/PostsPage/PostsPage";
 
 import { getToken, clearToken, clearUserData } from "./components/api";
 import { jwtDecode } from "jwt-decode";
 import { api } from "./components/api";
+
+function readStoredList(key) {
+  if (!key) return [];
+
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
 
 export default function App() {
   const [page, setPage] = useState(getToken() ? "shop" : "register");
@@ -50,33 +60,30 @@ export default function App() {
   }, [theme]);
 
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
-
-  const [cart, setCart] = useState(() => {
-    try {
-      const raw = localStorage.getItem("cart");
-      return raw ? JSON.parse(raw) : [];
-    } catch {
-      return [];
-    }
-  });
+  const [cart, setCart] = useState([]);
 
   const [toast, setToast] = useState(null);
-  const [favorites, setFavorites] = useState(() => {
-    try {
-      const raw = localStorage.getItem("favorites");
-      return raw ? JSON.parse(raw) : [];
-    } catch {
-      return [];
-    }
-  });
+  const [favorites, setFavorites] = useState([]);
+  const cartStorageKey = user ? `cart_${user.id}` : null;
+  const favoritesStorageKey = user ? `favorites_${user.id}` : null;
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+    setCart(readStoredList(cartStorageKey));
+  }, [cartStorageKey]);
 
   useEffect(() => {
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-  }, [favorites]);
+    setFavorites(readStoredList(favoritesStorageKey));
+  }, [favoritesStorageKey]);
+
+  useEffect(() => {
+    if (!cartStorageKey) return;
+    localStorage.setItem(cartStorageKey, JSON.stringify(cart));
+  }, [cart, cartStorageKey]);
+
+  useEffect(() => {
+    if (!favoritesStorageKey) return;
+    localStorage.setItem(favoritesStorageKey, JSON.stringify(favorites));
+  }, [favorites, favoritesStorageKey]);
 
   useEffect(() => {
     if (!toast) return;
@@ -242,20 +249,6 @@ export default function App() {
               favorites={favorites}
               onAdd={addToCart}
               onToggleFavorite={toggleFavorite}
-              favoritesCount={favorites.length}
-            />
-          }
-        />
-
-        <Route
-          path="/posts"
-          element={
-            <PostsPage
-              user={user}
-              onLogout={onLogout}
-              cartCount={cartCount}
-              theme={theme}
-              onToggleTheme={toggleTheme}
               favoritesCount={favorites.length}
             />
           }

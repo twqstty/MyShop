@@ -4,7 +4,6 @@ import cors from "cors";
 import productsRouter from "./routes/products";
 
 import authRouter from "./api/auth";
-import postsRouter from "./api/posts";
 import ordersRouter from "./routes/orders";
 import profileRouter from "./routes/profile";
 
@@ -15,7 +14,6 @@ app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 app.use("/api/auth", authRouter);
 app.use("/api/products", productsRouter);
-app.use("/api/posts", postsRouter);
 app.use("/api/orders", ordersRouter);
 app.use("/api/profile", profileRouter);
 

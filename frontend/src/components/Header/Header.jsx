@@ -130,10 +130,6 @@ export default function Header({ user, cartCount, onLogout, theme, onToggleTheme
                 Избранное
               </Link>
 
-              <Link className="btn btn--menu" to="/posts" onClick={() => setMenuOpen(false)}>
-                Посты
-              </Link>
-
               <button className="btn btn--ghost btn--menu" onClick={handleLogout}>
                 Выйти
               </button>
