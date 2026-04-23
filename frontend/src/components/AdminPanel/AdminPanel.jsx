@@ -113,7 +113,7 @@ export default function AdminPanel() {
 
         <input
           name="image"
-          placeholder="/products/example.jpg"
+          placeholder="Путь до изображения"
           value={form.image}
           onChange={change}
         />

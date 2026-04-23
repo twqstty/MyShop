@@ -116,9 +116,15 @@ export default function Header({ user, cartCount, onLogout, theme, onToggleTheme
             </div>
 
             <div className="hdrDropdown__section hdrDropdown__section--actions">
-              {user && (
+              {user?.role === "ADMIN" && (
                 <Link className="btn btn--ghost btn--menu" to="/admin" onClick={() => setMenuOpen(false)}>
                   Товары
+                </Link>
+              )}
+
+              {user?.role === "ADMIN" && (
+                <Link className="btn btn--menu" to="/support" onClick={() => setMenuOpen(false)}>
+                  Поддержка
                 </Link>
               )}
 

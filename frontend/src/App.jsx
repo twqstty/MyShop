@@ -10,6 +10,8 @@ import CheckoutModal from "./components/CheckoutModal/CheckoutModal";
 import AdminPanel from "./components/AdminPanel/AdminPanel";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 import FavoritesPage from "./components/FavoritesPage/FavoritesPage";
+import SupportPage from "./components/SupportPage/SupportPage";
+import SupportWidget from "./components/SupportWidget/SupportWidget";
 
 import { getToken, clearToken, clearUserData } from "./components/api";
 import { jwtDecode } from "jwt-decode";
@@ -274,8 +276,28 @@ export default function App() {
             />
           }
         />
+
+        <Route
+          path="/support"
+          element={
+            user?.role === "ADMIN" ? (
+              <SupportPage
+                user={user}
+                onLogout={onLogout}
+                cartCount={cartCount}
+                theme={theme}
+                onToggleTheme={toggleTheme}
+                favoritesCount={favorites.length}
+              />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          }
+        />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+
+      {user && user.role !== "ADMIN" && <SupportWidget user={user} />}
 
       <Toast toast={toast} onClose={() => setToast(null)} />
 

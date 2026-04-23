@@ -59,4 +59,13 @@ export const api = {
   createOrder: (payload) => request("/orders", { method: "POST", body: payload, auth: true }),
   getProfile: () => request("/profile/me", { auth: true }),
   updateProfile: (payload) => request("/profile/me", { method: "PUT", body: payload, auth: true }),
+  getSupportChat: () => request("/support/chat", { auth: true }),
+  getSupportMessages: () => request("/support/chat/messages", { auth: true }),
+  sendSupportMessage: (payload) => request("/support/chat/messages", { method: "POST", body: payload, auth: true }),
+  getAdminSupportChats: () => request("/support/admin/chats", { auth: true }),
+  getAdminSupportMessages: (chatId) => request(`/support/admin/chats/${chatId}/messages`, { auth: true }),
+  sendAdminSupportMessage: (chatId, payload) =>
+    request(`/support/admin/chats/${chatId}/messages`, { method: "POST", body: payload, auth: true }),
+  updateSupportChatStatus: (chatId, payload) =>
+    request(`/support/admin/chats/${chatId}`, { method: "PATCH", body: payload, auth: true }),
 };
