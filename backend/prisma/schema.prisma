@@ -20,14 +20,16 @@ enum Role {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
-  username String   @unique
-  email    String   @unique
-  password String
-  role     Role     @default(USER)
-  createAt DateTime @default(now())
-  posts    Post[]
-  orders   Order[]
+  id              Int              @id @default(autoincrement())
+  username        String           @unique
+  email           String           @unique
+  password        String
+  role            Role             @default(USER)
+  createAt        DateTime         @default(now())
+  posts           Post[]
+  orders          Order[]
+  supportChats    SupportChat[]    @relation("SupportChatUser")
+  supportMessages SupportMessage[] @relation("SupportMessageSender")
 }
 
 model Post {
@@ -77,4 +79,31 @@ model OrderItem {
 
   price Float
   qty   Int
+}
+
+enum SupportStatus {
+  OPEN
+  CLOSED
+}
+
+model SupportChat {
+  id            Int              @id @default(autoincrement())
+  userId        Int
+  user          User             @relation("SupportChatUser", fields: [userId], references: [id])
+  status        SupportStatus    @default(OPEN)
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  lastMessageAt DateTime         @default(now())
+  messages      SupportMessage[]
+}
+
+model SupportMessage {
+  id        Int         @id @default(autoincrement())
+  chatId    Int
+  chat      SupportChat @relation(fields: [chatId], references: [id])
+  senderId  Int
+  sender    User        @relation("SupportMessageSender", fields: [senderId], references: [id])
+  text      String
+  isRead    Boolean     @default(false)
+  createdAt DateTime    @default(now())
 }

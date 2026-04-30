@@ -7,6 +7,10 @@ export type AuthRequest = Request & {
 
 const JWT_SECRET = process.env.JWT_SECRET || "dev_secret_change_me";
 
+export function verifyAuthToken(token: string) {
+  return jwt.verify(token, JWT_SECRET) as any;
+}
+
 export function authRequired(req: AuthRequest, res: Response, next: NextFunction) {
   try {
     const header = req.headers.authorization;
@@ -14,7 +18,7 @@ export function authRequired(req: AuthRequest, res: Response, next: NextFunction
       return res.status(401).json({ error: "Missing Authorization Bearer token" });
     }
     const token = header.slice(7).trim();
-    const payload = jwt.verify(token, JWT_SECRET) as any;
+    const payload = verifyAuthToken(token);
 
     if (!payload?.id) return res.status(401).json({ error: "Invalid token" });
 

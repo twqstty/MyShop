@@ -3,10 +3,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.verifyAuthToken = verifyAuthToken;
 exports.authRequired = authRequired;
 exports.signToken = signToken;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const JWT_SECRET = process.env.JWT_SECRET || "dev_secret_change_me";
+function verifyAuthToken(token) {
+    return jsonwebtoken_1.default.verify(token, JWT_SECRET);
+}
 function authRequired(req, res, next) {
     try {
         const header = req.headers.authorization;
@@ -14,7 +18,7 @@ function authRequired(req, res, next) {
             return res.status(401).json({ error: "Missing Authorization Bearer token" });
         }
         const token = header.slice(7).trim();
-        const payload = jsonwebtoken_1.default.verify(token, JWT_SECRET);
+        const payload = verifyAuthToken(token);
         if (!payload?.id)
             return res.status(401).json({ error: "Invalid token" });
         req.user = {
